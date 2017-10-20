@@ -1,0 +1,25 @@
+{
+	"groups": [
+		{
+			"keys": "description_json,funny_json,funny_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"name": "description_json",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "funny_json",
+			"type": "json",
+			"url": "assets/funny.json"
+		},
+		{
+			"name": "funny_png",
+			"type": "image",
+			"url": "assets/funny.png"
+		}
+	]
+}
