@@ -22,6 +22,9 @@
       "name": "tween"
     },
     {
+      "name": "eui"
+    },
+    {
       "name": "particle",
       "path": "../particle/libsrc"
     }

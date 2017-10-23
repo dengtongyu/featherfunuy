@@ -111,6 +111,10 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     private textfield: egret.TextField;
+    private funnyBtn: eui.Button;
+    private winkBtn: eui.Button;
+    private status: Boolean;
+    private particle: any;
 
     /**
      * 创建游戏场景
@@ -120,13 +124,75 @@ class Main extends egret.DisplayObjectContainer {
         let stageW = this.stage.stageWidth;
         let stageH = this.stage.stageHeight;
         
+        this.funnyBtn = new eui.Button();
+        this.funnyBtn.width = 100;
+        this.funnyBtn.height = 40;
+        this.funnyBtn.label = "滑稽";
+        this.funnyBtn.x = (stageW - this.funnyBtn.width)/2;
+        this.funnyBtn.y = 30;
+        this.funnyBtn.skinName = "resource/skin/ButtonSkin.exml";
+        this.addChild(this.funnyBtn);
+        this.funnyBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onFunnyTouchTap, this);
+
+        this.winkBtn = new eui.Button();
+        this.winkBtn.width = 100;
+        this.winkBtn.height = 40;
+        this.winkBtn.label = "眨眼";
+        this.winkBtn.x = (stageW - this.winkBtn.width)/2;
+        this.winkBtn.y = 30 + this.funnyBtn.height + 30;
+        this.winkBtn.skinName = "resource/skin/ButtonSkin.exml";
+        this.addChild(this.winkBtn);
+        this.winkBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onWinkTouchTap, this);
+        
+        this.insertFunny();
+        this.status = true;
+    }
+
+    private onFunnyTouchTap() {
+        if(!this.status) {
+            if(this.particle) {
+                this.particle.stop();
+                this.removeChild(this.particle);
+            }
+            this.insertFunny();
+            this.status = true;
+        }
+    }
+
+    private onWinkTouchTap() {
+        
+        if(this.status) {
+            if(this.particle) {
+                this.particle.stop();
+                this.removeChild(this.particle);
+            }
+            this.insertWink();
+            this.status = false;
+        }
+    }
+
+    /**
+     滑稽
+     */
+    private insertFunny() {
         let texture = RES.getRes("funny_png");
         let config = RES.getRes("funny_json");
-        let funny = new particle.GravityParticleSystem(texture, config);
-        funny.x = stageW/2;
-        funny.y = stageH/2;
-        funny.start();
-        this.addChild(funny);
+        this.particle = new particle.GravityParticleSystem(texture, config);
+        this.particle.x = this.stage.stageWidth/2;
+        this.particle.y = this.stage.stageHeight/2;
+        this.particle.start();
+        this.addChild(this.particle);
+    }
+
+    /**
+     眨眼
+     */
+    private insertWink() {
+        let texture = RES.getRes("wink_png");
+        let config = RES.getRes("wink_json");
+        this.particle = new particle.GravityParticleSystem(texture, config);
+        this.particle.start();
+        this.addChild(this.particle);
     }
 
     /**
